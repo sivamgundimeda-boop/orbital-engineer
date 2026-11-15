@@ -91,7 +91,7 @@
 
   <!-- 02 -->
   <section class="panel hist">
-    <h2 class="ph"><span class="num">02</span>Historical Background</h2>
+    <h2 class="ph"><span class="num">02</span>Historical Background<button class="more" type="button" data-more="bg" aria-haspopup="dialog" aria-label="Read more about the historical background">Read more<svg viewBox="0 0 24 24"><path d="M4 11h12.200l-5.600-5.600L12 4l8 8-8 8-1.400-1.400 5.600-5.600H4z"/></svg></button></h2>
     <div class="pbody">
       <p class="ptext">Before MRO, scientists knew water once flowed on Mars. MRO was designed to investigate where that water went, how long it persisted, and whether Mars could have supported life.</p>
       <img src="assets/crater.png" alt="Grayscale view of a Martian crater">
@@ -100,7 +100,7 @@
 
   <!-- 03 -->
   <section class="panel impact">
-    <h2 class="ph"><span class="num">03</span>Historical Impact</h2>
+    <h2 class="ph"><span class="num">03</span>Historical Impact<button class="more" type="button" data-more="im" aria-haspopup="dialog" aria-label="Read more about the historical impact">Read more<svg viewBox="0 0 24 24"><path d="M4 11h12.200l-5.600-5.600L12 4l8 8-8 8-1.400-1.400 5.600-5.600H4z"/></svg></button></h2>
     <div class="pbody">
       <p class="ptext">MRO provided detailed views of Mars, helped identify future landing sites, and acted as a communications relay for other missions.</p>
       <img src="assets/mars-impact.png" alt="Mars">
@@ -126,6 +126,18 @@
 
   <a class="nav back" href="index.html"><svg viewBox="0 0 24 24"><path d="M20 11H7.800l5.600-5.600L12 4l-8 8 8 8 1.400-1.400L7.800 13H20z"/></svg>Back</a>
   <a class="nav begin" id="beginBtn" href="game.html">Begin Mission<svg viewBox="0 0 24 24"><path d="M4 11h12.200l-5.600-5.600L12 4l8 8-8 8-1.400-1.400 5.600-5.600H4z"/></svg></a>
+</div>
+<!-- "Read more" pop-up for Historical Background / Historical Impact -->
+<div class="rm" id="readMore" hidden role="dialog" aria-modal="true" aria-labelledby="rmTitle">
+  <div class="rm-box">
+    <div class="rm-head">
+      <span class="num" id="rmNum">02</span>
+      <div class="rm-titles"><h2 id="rmTitle">Historical Background</h2><p id="rmSub"></p></div>
+      <button class="rm-x" type="button" data-rm-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M5.400 4L12 10.600 18.600 4 20 5.400 13.400 12 20 18.600 18.600 20 12 13.400 5.400 20 4 18.600 10.600 12 4 5.400z"/></svg></button>
+    </div>
+    <div class="rm-body" id="rmBody" tabindex="0"></div>
+    <div class="rm-foot"><button class="rm-close" id="rmClose" type="button" data-rm-close>Close</button></div>
+  </div>
 </div>
 <script>
 // Stage selection: stage 1 content is read from the page itself, stage 2 is defined here.
@@ -170,8 +182,96 @@
     i: '<p class="ptext">Provided new insights into asteroid composition and solar system history.</p><img src="assets/dawn-impact.png" alt="An asteroid">',
     m: '<dl><dt>Launch Date:</dt><dd>27 September 2007</dd><dt>Arrival at Vesta:</dt><dd>16 July 2011</dd><dt>Launch Vehicle:</dt><dd>Delta II 7925H</dd></dl><dl><dt>Power Source:</dt><dd>Solar</dd><dt>Launch Mass:</dt><dd>1,218 kg</dd><dt>Destination:</dt><dd>Asteroid Belt</dd></dl>'
   };
+  let cur = 'mro';   // stage currently shown (kept up to date by pick)
+  // ---- "Read more" pop-ups: full Historical Background / Historical Impact text for each stage ----
+  const HISTORY = {
+    "mro": {
+      "bg": [
+        "By the beginning of the 21st century, spacecraft had established that Mars was not always the cold, dry world seen today. Earlier missions had identified ancient channels, minerals associated with water, and geological features shaped by flowing liquid. However, many important questions remained unanswered: how long water had existed on the surface, where it had persisted, how the planet\u2019s climate had changed, and which locations might once have been suitable for microbial life.",
+        "NASA launched the Mars Reconnaissance Orbiter (MRO) in August 2005 to investigate these questions with a level of detail that earlier orbiters could not provide. After its seven-month cruise, MRO entered Mars orbit in March 2006. It then used months of aerobraking\u2014repeatedly passing through the upper atmosphere to reduce its orbital energy\u2014to reach the orbit needed for its science mission.",
+        "MRO carried a powerful suite of instruments. Its HiRISE camera could photograph small surface features in extraordinary detail; CRISM examined minerals to identify materials formed in the presence of water; SHARAD used radar to investigate shallow subsurface structures; and other instruments monitored the atmosphere, weather, and seasonal changes. The spacecraft was designed not only to study Mars from orbit, but also to act as a communications relay for landers and rovers on the surface."
+      ],
+      "im": [
+        "MRO transformed the detail with which scientists could study Mars. Its observations revealed a planet with a complex geological and climatic history, including layered deposits, ancient water-related landforms, exposed minerals, subsurface ice, and surface changes that continue to occur today. The mission helped establish that water-related environments existed in many different regions and at different periods in Martian history.",
+        "Its long-term observations also showed that Mars is not a static world. MRO has monitored shifting sand dunes, seasonal frost, dust storms, avalanches, new impact craters, and other changes. These observations help scientists understand the planet\u2019s present climate as well as its ancient past.",
+        "MRO\u2019s impact extends beyond its own scientific discoveries. Its high-resolution images and mineral maps have helped researchers assess potential landing sites for later missions, while its communications relay has supported spacecraft operating on the Martian surface. By combining detailed global reconnaissance with practical support for landed missions, MRO became a crucial part of the infrastructure behind modern Mars exploration."
+      ]
+    },
+    "cassini": {
+      "bg": [
+        "Before Cassini\u2013Huygens, humanity\u2019s knowledge of Saturn came largely from telescopic observations and brief spacecraft flybys. Pioneer 11 and Voyager 1 and 2 had revealed important details about Saturn\u2019s rings, atmosphere, magnetic environment, and moons, but their rapid encounters could not provide the sustained observations needed to understand the Saturnian system as a whole.",
+        "Cassini\u2013Huygens was created as an ambitious international mission involving NASA, the European Space Agency (ESA), and the Italian Space Agency (ASI). It launched in October 1997 and travelled for almost seven years before reaching Saturn in 2004. The mission consisted of two spacecraft working together: NASA\u2019s Cassini orbiter, which would repeatedly study Saturn and its moons, and ESA\u2019s Huygens probe, which was designed to descend through the thick atmosphere of Titan, Saturn\u2019s largest moon.",
+        "The mission was built to investigate Saturn\u2019s atmosphere, rings, magnetosphere, and icy satellites in unprecedented detail. Huygens added a capability that an orbiter alone could not provide: direct measurements during descent through Titan\u2019s atmosphere and observations from the moon\u2019s surface. After separating from Cassini, Huygens reached Titan in January 2005 and became the first spacecraft to land on a moon in the outer solar system."
+      ],
+      "im": [
+        "Cassini\u2013Huygens fundamentally changed our understanding of Saturn and its moons. Cassini revealed that Saturn\u2019s rings are dynamic structures shaped by gravity, small moons, and interactions among ring particles. It observed complex weather systems, including Saturn\u2019s enormous northern polar hexagon, and provided years of detailed measurements of the planet\u2019s atmosphere and magnetic environment.",
+        "The mission also transformed Titan from a distant, hazy moon into a world with a remarkably Earth-like surface cycle. Huygens returned images and measurements during its descent and from the surface, revealing drainage channels and rounded icy material. Cassini later mapped Titan\u2019s lakes and seas of liquid methane and ethane, along with evidence of rivers, rainfall, and changing surface features. These discoveries showed that Titan has a methane-based weather cycle operating in an environment very different from Earth\u2019s.",
+        "At Enceladus, Cassini discovered water-rich plumes erupting from fractures near the moon\u2019s south pole. Further observations provided strong evidence for a global subsurface ocean and conditions that may include hydrothermal activity. This made Enceladus a major target in the search for potentially habitable environments beyond Earth.",
+        "Cassini\u2019s final Grand Finale in 2017 sent the spacecraft through the narrow gap between Saturn and its innermost rings, allowing unusually precise measurements of the planet and rings. The mission ended with a deliberate plunge into Saturn to reduce the risk of contaminating potentially habitable moons. Its legacy is a much richer understanding of giant planets, icy worlds, planetary rings, and the environments in which life might be possible."
+      ]
+    },
+    "msl": {
+      "bg": [
+        "Earlier Mars landers and rovers had established that liquid water once shaped the planet and that some ancient Martian environments may have been suitable for life. NASA\u2019s next challenge was to move beyond identifying promising locations and directly examine the chemistry and geology of an ancient environment. The Mars Science Laboratory (MSL) mission was designed around this goal.",
+        "Launched in November 2011, MSL carried the Curiosity rover, which was significantly larger and more capable than earlier Mars rovers. Its destination was Gale Crater, a large impact basin containing a layered mountain\u2014Mount Sharp\u2014whose exposed rock layers preserve a record of environmental change over time. By studying these layers, Curiosity could investigate how water, climate, and geological processes changed as Mars evolved.",
+        "Getting such a large rover safely to the surface required a new landing approach. Curiosity used a guided atmospheric entry, a parachute, and a rocket-powered descent stage. In the final moments, the descent stage lowered the rover on cables in the now-famous \u201csky crane\u201d manoeuvre before flying away to crash at a safe distance. Curiosity landed successfully in August 2012 and began exploring Gale Crater.",
+        "The rover carried a mobile laboratory, including instruments that could analyse the composition of rocks and soil, identify minerals, examine samples drilled from inside rocks, and study the atmosphere and radiation environment. Its purpose was to determine whether ancient Mars had environmental conditions capable of supporting microbial life\u2014not to search for or claim the discovery of life itself."
+      ],
+      "im": [
+        "Curiosity provided compelling evidence that ancient Mars once had environments that could have supported microbial life. Early in the mission, it examined rocks at Yellowknife Bay that indicated a former lake environment with relatively fresh, near-neutral water. The chemistry and minerals found there showed that the environment had key ingredients needed for life as we understand it.",
+        "As Curiosity travelled through Gale Crater and began examining Mount Sharp, it documented a long geological record of changing environments. Evidence from sedimentary rocks showed that rivers and lakes had existed in the crater, with some lake environments potentially persisting for very long periods. The rover also detected organic molecules preserved in Martian rocks. Organic molecules are important building blocks of life, although their presence alone does not demonstrate that life ever existed on Mars.",
+        "Curiosity also expanded our understanding of the modern Martian environment. Its radiation measurements help scientists assess risks that future human explorers may face. Its weather and atmospheric observations contribute to knowledge of dust, seasonal changes, and the planet\u2019s long-term climate evolution.",
+        "The mission demonstrated the scientific value of a mobile laboratory capable of analysing rocks directly on another planet. Curiosity\u2019s findings strengthened the case that Mars was once more habitable than it is today and provided important geological context for later Mars missions, including missions designed to collect samples for possible return to Earth."
+      ]
+    },
+    "juno": {
+      "bg": [
+        "Jupiter is the largest planet in the solar system and preserves clues about the conditions that existed when the planets were forming. Because it contains mostly hydrogen and helium, scientists believe it retained much of the material available in the early solar system after the Sun formed. Understanding Jupiter\u2019s composition, interior, atmosphere, and magnetic field can therefore help explain how the solar system developed.",
+        "Earlier missions\u2014including Pioneer, Voyager, and Galileo\u2014had revealed important features of Jupiter, but many fundamental questions remained. Scientists still needed better measurements of the planet\u2019s deep atmosphere, internal structure, magnetic field, and polar regions. Juno was designed to investigate these questions by approaching Jupiter on a highly elliptical polar orbit, passing close to the planet before travelling far away again.",
+        "Juno launched in August 2011 and reached Jupiter in July 2016 after a five-year journey that included an Earth gravity assist. It was designed to operate in Jupiter\u2019s intense radiation environment while making close scientific passes. Unlike earlier Jupiter orbiters, Juno approached the planet over its poles, giving scientists a new view of regions that had not previously been studied in such detail.",
+        "Juno was also notable for using large solar arrays rather than radioisotope power. Operating solar-powered equipment so far from the Sun required carefully designed, efficient systems. Its instruments measure gravity, magnetic fields, atmospheric composition, particles, and plasma waves, while its camera captures detailed views of Jupiter\u2019s clouds and storms."
+      ],
+      "im": [
+        "Juno revealed that Jupiter\u2019s atmosphere and interior are more complex than scientists had expected. Its gravity measurements showed that the planet\u2019s powerful atmospheric jet streams extend thousands of kilometres below the visible cloud tops. These results helped scientists understand that Jupiter\u2019s familiar bands are not merely shallow surface patterns, but part of a much deeper atmospheric system.",
+        "Juno\u2019s polar observations uncovered enormous cyclones arranged in persistent patterns around Jupiter\u2019s north and south poles. The spacecraft also investigated powerful auroras and found that Jupiter\u2019s magnetic field is exceptionally intense and more complicated than earlier models suggested. Measurements of the planet\u2019s interior indicate that its core may be diffuse or \u201cfuzzy,\u201d rather than a simple compact central structure.",
+        "The mission also improved knowledge of water and ammonia in Jupiter\u2019s atmosphere, lightning, storms, and the Great Red Spot. These findings help researchers test theories about how gas giants form and evolve, including how Jupiter\u2019s early history influenced the development of the rest of the solar system.",
+        "Juno\u2019s extended mission broadened its work beyond Jupiter\u2019s atmosphere to include observations of the planet\u2019s rings and several major moons. Its close investigations of the Jovian system provide valuable context for future missions to icy moons, including ESA\u2019s JUICE and NASA\u2019s Europa Clipper. Juno has shown how a carefully planned polar orbit and a solar-powered spacecraft can deliver new science even in one of the solar system\u2019s harshest radiation environments."
+      ]
+    },
+    "dawn": {
+      "bg": [
+        "The asteroid belt between Mars and Jupiter contains remnants of the material from which the planets formed. Many of these bodies preserve clues about the early solar system, but studying them closely is difficult: they are small, distant, and separated by vast distances. Two of the most scientifically important objects in the belt are Vesta and Ceres. Although they occupy the same region, they followed very different evolutionary paths.",
+        "Vesta is a rocky, differentiated world with a history that resembles the formation of the inner rocky planets. Ceres is larger and contains substantial water-bearing material, making it more similar in some respects to the icy bodies of the outer solar system. Scientists selected both targets because comparing them could reveal how the availability of water, the amount of heat, and an object\u2019s size influenced the development of early planetary bodies.",
+        "NASA\u2019s Dawn mission was designed to orbit both Vesta and Ceres rather than simply fly past them. This was made possible by its use of ion propulsion, an extremely fuel-efficient form of electric propulsion. Dawn\u2019s three ion engines produced gentle but continuous thrust over long periods, allowing the spacecraft to gradually change its orbit and travel between the two destinations. The mission launched in September 2007, reached Vesta in 2011, and arrived at Ceres in 2015.",
+        "By orbiting each world, Dawn could map its surface, measure its gravity, study its mineral composition, and investigate its internal structure. It became the first spacecraft to orbit a main-belt asteroid and the first to reach and orbit a dwarf planet."
+      ],
+      "im": [
+        "At Vesta, Dawn revealed a world with a complex geological history. It mapped two enormous impact basins in the southern hemisphere, including Rheasilvia, and found evidence that Vesta experienced extensive heating and internal separation into layers, including an iron-rich core. These findings strengthened the idea that some large asteroids are not primitive, unchanged rocks, but are worlds that underwent many of the same processes that shaped planets.",
+        "Dawn\u2019s observations also helped connect Vesta to a class of meteorites found on Earth. By studying Vesta\u2019s surface composition and geological structure, scientists gained a better understanding of how some meteorites originated and how material from the asteroid belt can reach our planet.",
+        "At Ceres, Dawn discovered a surprisingly complex world containing water-bearing minerals, ice, bright deposits of salts and carbonates, and evidence of relatively recent geological activity. Its observations of the bright regions inside Occator Crater showed that the deposits were not simply exposed ice; they included salts left behind by briny material. Dawn also studied Ahuna Mons, a large mountain interpreted as evidence of cryovolcanic activity.",
+        "The contrast between dry, rocky Vesta and water-rich Ceres gave scientists a rare opportunity to compare two early planetary building blocks that formed in the same broad region but evolved differently. Dawn demonstrated the power of ion propulsion for deep-space exploration and showed that small worlds can preserve important records of the solar system\u2019s earliest history. Its mission ended in 2018 after its hydrazine attitude-control propellant was depleted, leaving the spacecraft in orbit around Ceres."
+      ]
+    }
+  };
+  const SECTION = { bg: ['02', 'Historical Background'], im: ['03', 'Historical Impact'] };
+  const rm = $('#readMore'), rmBody = $('#rmBody'); let rmFrom = null;
+  function openMore(kind, btn) {
+    const paras = (HISTORY[cur] || {})[kind]; if (!paras) return;
+    $('#rmNum').textContent = SECTION[kind][0]; $('#rmTitle').textContent = SECTION[kind][1]; $('#rmSub').textContent = $('.dtext h1').textContent;
+    rmBody.innerHTML = ''; paras.forEach(t => { const p = document.createElement('p'); p.textContent = t; rmBody.appendChild(p); });
+    rmFrom = btn; rm.hidden = false; rmBody.scrollTop = 0; $('#rmClose').focus();
+  }
+  function closeMore() { if (rm.hidden) return; rm.hidden = true; if (rmFrom) { try { rmFrom.focus(); } catch (e) {} } }
+  document.querySelectorAll('.more').forEach(b => b.addEventListener('click', () => openMore(b.dataset.more, b)));
+  rm.addEventListener('click', e => { if (e.target === rm || e.target.closest('[data-rm-close]')) closeMore(); });
+  document.addEventListener('keydown', e => {
+    if (rm.hidden) return;
+    if (e.key === 'Escape') { e.preventDefault(); closeMore(); }
+    else if (e.key === 'Tab') { const f = [...rm.querySelectorAll('button, [tabindex="0"]')]; if (!f.length) return; const a = f[0], z = f[f.length - 1];
+      if (!rm.contains(document.activeElement)) { e.preventDefault(); a.focus(); } else if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); } else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); } }
+  });
   function pick(id) {
-    const s = STAGES[id] || STAGES.mro; if (!STAGES[id]) id = 'mro';
+    const s = STAGES[id] || STAGES.mro; if (!STAGES[id]) id = 'mro'; cur = id;
     $('.dbody').innerHTML = s.d; $('.obody p').innerHTML = s.p; $('.obody ul').innerHTML = s.l;
     $('.hist .pbody').innerHTML = s.h; $('.impact .pbody').innerHTML = s.i; $('.params .pbody').innerHTML = s.m;
     $('#beginBtn').href = s.go; if (s.w) $('.warn').lastChild.textContent = s.w;

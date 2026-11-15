@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Orbital Engineer - Juno Construction</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600&family=Chakra+Petch:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/game.css">
+  <link rel="stylesheet" href="css/audio.css">
+  <script src="js/audio.js" defer></script>
+</head>
+<body>
+<div class="frame">
+  <header class="top">
+    <img class="logo" src="assets/planet-icon.png" alt="">
+    <span class="brand">Orbital Engineer</span>
+    <div class="tabs" role="tablist">
+      <a class="tab active" href="mission.html" role="tab" style="text-decoration:none;cursor:pointer">Campaign</a><a class="tab" href="techtree.html" role="tab" style="text-decoration:none;cursor:pointer">Tech Tree</a><div class="tab" role="tab">Settings</div>
+    </div>
+  </header>
+
+  <aside class="left">
+    <div class="badge2">Juno Construction <i></i></div>
+    <nav id="cats"></nav>
+    <div class="cutoff"><span>⚠</span><b>Tech cutoff:<br>Aug 2011</b></div>
+  </aside>
+
+  <section class="panel center">
+    <div class="dhead">Spacecraft Assembly<span class="stage">Stage 04 · Juno</span></div>
+    <div class="modes" id="modes"></div>
+    <svg id="stencil" viewBox="0 0 100 58" shape-rendering="crispEdges"></svg>
+    <div class="hint" id="hint"></div>
+    <div class="inv" id="inv"></div>
+  </section>
+
+  <aside class="right">
+    <section class="panel status"><h2>Engineering Status</h2><div id="status"></div></section>
+    <section class="panel sel"><h2>Selected Component</h2><div id="sel"></div></section>
+  </aside>
+
+  <a class="nav back" href="mission.html">← Back to Debriefing</a>
+  <button class="nav validate" id="validateBtn" type="button">Validate Spacecraft →</button>
+</div>
+
+<div class="modal" id="modal" hidden><div class="box"><h2>Spacecraft Validation</h2><div id="results"></div>
+  <div class="actions"><button class="nav" id="closeBtn" type="button">Return to Construction</button><a class="nav go" id="proceed" href="simulate.html" hidden>Proceed to Mission Preparation →</a></div></div></div>
+<script>window.STAGE_ID = 'juno';</script>
+<script src="js/game.js"></script>
+</body>
+</html>

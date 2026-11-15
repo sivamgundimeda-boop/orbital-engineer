@@ -1,0 +1,61 @@
+/* ORBITAL ENGINEER - audio settings dialog. Uses the game's own palette (navy panels, teal edge, cyan accent) and UI font. */
+.oe-set { --k: max(min(1vw, 1.78vh), 6.2px); position: fixed; inset: 0; z-index: 2147483000; display: grid; place-items: center; padding: 3vmin;
+  background: rgba(15, 47, 74, .88); font-family: 'Chakra Petch', 'Trebuchet MS', sans-serif; color: #eaf4f6; }
+.oe-set[hidden] { display: none !important; }
+.oe-set *, .oe-set *::before, .oe-set *::after { box-sizing: border-box; margin: 0; }
+.oe-set svg { fill: currentColor; }
+
+.oe-box { font-size: max(13px, calc(var(--k) * 1.25)); width: min(94vw, max(27em, calc(var(--k) * 46))); max-height: 94vh; max-height: 94dvh; overflow: auto;
+  display: grid; gap: .9em; padding: 1.1em 1.2em 1em; background: #1f4a66; border: .2em solid #5da6be; border-radius: .6em;
+  box-shadow: inset 0 0 0 .15em #143e5b, 0 .35em 0 #0f2f4a; }
+.oe-box h2 { display: flex; align-items: center; gap: .55em; padding-bottom: .6em; border-bottom: .15em solid #5da6be;
+  font: 700 1.45em/1 'Chakra Petch', 'Trebuchet MS', sans-serif; letter-spacing: .06em; text-transform: uppercase; }
+.oe-box h2 svg { width: 1.15em; height: 1.15em; color: #80d6dd; flex: none; }
+
+.oe-row { display: grid; gap: .75em; padding: .85em .95em .8em; background: #1c4562; border: .14em solid #5da6be; border-radius: .45em; transition: border-color .15s; }
+.oe-row.off { border-color: #3f6279; }
+.oe-head { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .8em; }
+.oe-ico { display: grid; place-items: center; width: 2.5em; height: 2.5em; background: #143e5b; border: .14em solid #5da6be; border-radius: .4em; color: #80d6dd; }
+.oe-ico svg { width: 1.4em; height: 1.4em; }
+.oe-row.off .oe-ico { color: #7d98aa; border-color: #3f6279; }
+.oe-name { display: grid; gap: .2em; min-width: 0; }
+.oe-name b { font: 700 1.1em/1.1 'Chakra Petch', 'Trebuchet MS', sans-serif; letter-spacing: .04em; text-transform: uppercase; }
+.oe-name small { font: 500 .85em/1.15 'Barlow Semi Condensed', 'Arial Narrow', sans-serif; color: #c4dde6; }
+
+/* ON / OFF switch */
+.oe-toggle { display: inline-flex; align-items: center; justify-content: center; gap: .55em; min-width: 5.6em; height: 2.3em; padding: 0 .9em; cursor: pointer;
+  font: 700 .95em/1 'Chakra Petch', 'Trebuchet MS', sans-serif; letter-spacing: .1em; color: #eaf4f6; background: #2b6d6a; border: .16em solid #8de6a8; border-radius: .4em;
+  box-shadow: 0 .18em 0 #143e5b; transition: transform .08s, box-shadow .08s, background .12s; }
+.oe-toggle:hover { filter: brightness(1.1); }
+.oe-toggle:active { transform: translateY(.15em); box-shadow: 0 .03em 0 #143e5b; }
+.oe-led { width: .8em; height: .8em; border-radius: 50%; background: #8de6a8; box-shadow: 0 0 .6em rgba(141, 230, 168, .85); flex: none; }
+.oe-toggle[aria-checked="false"] { background: #34495a; border-color: #6a8196; color: #b9c8d2; }
+.oe-toggle[aria-checked="false"] .oe-led { background: #e0524a; box-shadow: 0 0 .5em rgba(224, 82, 74, .7); }
+
+/* volume slider: fill shows the level, readout shows the percentage */
+.oe-slide { display: grid; grid-template-columns: auto 1fr auto 3.8em; align-items: center; gap: .6em; }
+.oe-min, .oe-max { font: 600 .8em/1 'Barlow Semi Condensed', 'Arial Narrow', sans-serif; color: #a9c5d6; }
+.oe-val { display: block; padding: .3em .35em; text-align: center; font: 700 1em/1 'Chakra Petch', 'Trebuchet MS', sans-serif; color: #80d6dd; background: #0f2f4a; border: .12em solid #3f6f8a; border-radius: .3em; }
+.oe-row.off .oe-val { color: #8fa6b5; }
+.oe-set input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 1.9em; margin: 0; background: transparent; cursor: pointer; --p: 50%; }
+.oe-set input[type="range"]::-webkit-slider-runnable-track { height: .85em; border: .14em solid #5da6be; border-radius: .25em; background: linear-gradient(to right, #80d6dd var(--p), #0f2f4a var(--p)); }
+.oe-set input[type="range"]::-moz-range-track { height: .85em; border: .14em solid #5da6be; border-radius: .25em; background: linear-gradient(to right, #80d6dd var(--p), #0f2f4a var(--p)); }
+.oe-set input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 1.25em; height: 1.75em; margin-top: -.5em; background: #eaf4f6; border: .15em solid #143e5b; border-radius: .25em; box-shadow: 0 .15em 0 #0f2f4a; }
+.oe-set input[type="range"]::-moz-range-thumb { width: 1.05em; height: 1.45em; background: #eaf4f6; border: .15em solid #143e5b; border-radius: .25em; box-shadow: 0 .15em 0 #0f2f4a; }
+.oe-row.off input[type="range"]::-webkit-slider-runnable-track { background: linear-gradient(to right, #6f8fa3 var(--p), #0f2f4a var(--p)); border-color: #3f6279; }
+.oe-row.off input[type="range"]::-moz-range-track { background: linear-gradient(to right, #6f8fa3 var(--p), #0f2f4a var(--p)); border-color: #3f6279; }
+.oe-row.off input[type="range"]::-webkit-slider-thumb { background: #b9c8d2; }
+.oe-row.off input[type="range"]::-moz-range-thumb { background: #b9c8d2; }
+
+.oe-actions { display: flex; justify-content: flex-end; gap: .8em; }
+.oe-btn { display: inline-flex; align-items: center; justify-content: center; height: 2.5em; padding: 0 1.4em; cursor: pointer; white-space: nowrap;
+  font: 700 .95em/1 'Chakra Petch', 'Trebuchet MS', sans-serif; letter-spacing: .06em; text-transform: uppercase; color: #eaf4f6; background: #335b72;
+  border: .18em solid #143e5b; border-radius: .45em; box-shadow: inset 0 0 0 .12em #5da6be, 0 .2em 0 #143e5b; }
+.oe-btn:hover { filter: brightness(1.1); } .oe-btn:active { transform: translateY(.18em); box-shadow: inset 0 0 0 .12em #5da6be, 0 .02em 0 #143e5b; }
+.oe-btn.go { background: #7fd0dc; color: #0e3a55; }
+.oe-set button:focus-visible, .oe-set input:focus-visible { outline: .16em solid #fff; outline-offset: .15em; }
+
+/* the existing "Settings" tab / button now opens this dialog */
+[data-oe-settings] { cursor: pointer; }
+.tab[data-oe-settings]:hover { filter: brightness(1.12); }
+.tab[data-oe-settings]:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }

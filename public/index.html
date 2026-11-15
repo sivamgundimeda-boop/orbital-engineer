@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Orbital Engineer - Satellite Mission Simulator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Rubik:ital,wght@1,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/audio.css">
+  <script src="js/audio.js" defer></script>
+</head>
+<body>
+  <main class="stage">
+    <svg class="orbit" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
+      <ellipse cx="760" cy="520" rx="430" ry="520" transform="rotate(28 760 520)" />
+    </svg>
+
+    <img class="satellite" src="assets/satellite.png" alt="" aria-hidden="true">
+
+    <img class="earth" src="assets/earth.png" alt="" aria-hidden="true">
+
+    <section class="menu">
+      <h1 class="title"><span>Orbital</span><span>Engineer</span></h1>
+      <p class="subtitle"><i></i>Satellite Mission Simulator<i></i></p>
+
+      <div class="menu-head"><span class="badge">Main Menu</span><hr></div>
+
+      <nav class="buttons" aria-label="Main menu">
+        <a class="btn selected" href="mission.html" id="startBtn">
+          <svg class="arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M2 1l17 9-17 9z"/></svg>
+          Start Mission
+        </a>
+        <div class="btn-row">
+          <button class="btn" id="settingsBtn" type="button">Settings</button>
+          <button class="btn" id="quitBtn" type="button">Quit</button>
+        </div>
+      </nav>
+
+      <div class="status" role="status">
+        <svg class="dish-icon" viewBox="0 0 40 40" aria-hidden="true"><ellipse cx="18" cy="14" rx="13" ry="8" transform="rotate(-30 18 14)"/><path d="M18 18v14M10 34h16"/></svg>
+        <span class="divider"></span>
+        <div class="status-text"><strong>Mission Control Online</strong><span>Ready for launch.</span></div>
+        <span class="led" aria-label="Signal"></span>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

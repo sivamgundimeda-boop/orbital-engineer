@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Orbital Engineer - Mission Success</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600&family=Chakra+Petch:ital,wght@0,600;0,700;1,600&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/audio.css">
+  <script src="js/audio.js" defer></script>
+  <style>
+    /* ORBITAL ENGINEER - final page: Mission Success. Same scaling unit, palette and fonts as the other pages. */
+    :root {
+      --u: min(1vw, 1.78vh);
+      --sky: #87c8c9; --sky-grid: #7dbdbf;
+      --panel: #1f4a66; --panel-deep: #143e5b; --edge: #5da6be; --line: #508c9d;
+      --cyan: #80d6dd; --ink: #123550; --white: #eaf4f6;
+      --navy: #0e3453; --navy2: #0a2a45; --bright: #3fa7d6; --bar: #4fd6ee;
+      --lime: #b8f56b; --green: #5de08a; --gold: #ffd23f;
+      --font-ui: 'Chakra Petch', 'Trebuchet MS', sans-serif;
+      --font-body: 'Barlow Semi Condensed', 'Arial Narrow', sans-serif;
+      --font-pix: 'Press Start 2P', 'Chakra Petch', 'Courier New', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; }
+    html, body { height: 100%; }
+    body { display: grid; place-items: center; overflow: hidden; font-family: var(--font-body); color: var(--white);
+      background-color: var(--sky);
+      background-image: linear-gradient(var(--sky-grid) 1px, transparent 1px), linear-gradient(90deg, var(--sky-grid) 1px, transparent 1px);
+      background-size: 28px 28px; }
+    .frame { position: relative; width: calc(var(--u) * 100); height: calc(var(--u) * 56.28); }
+    .frame > * { position: absolute; }
+    svg { fill: currentColor; }
+    ul { list-style: none; padding: 0; }
+
+    /* ---------- top bar (same as the other pages) ---------- */
+    .top { left: 0; right: 0; top: 0; height: calc(var(--u) * 4.4); border-bottom: 2px solid var(--line); z-index: 2; }
+    .logo { position: absolute; left: calc(var(--u) * 1.6); top: calc(var(--u) * .3); height: calc(var(--u) * 3.9); width: auto; mix-blend-mode: multiply; }
+    .brand { position: absolute; left: calc(var(--u) * 8.2); top: calc(var(--u) * .5); font: 700 calc(var(--u) * 2.5)/1.2 var(--font-ui); text-transform: uppercase; letter-spacing: .02em;
+      color: var(--white); -webkit-text-stroke: calc(var(--u) * .35) var(--ink); paint-order: stroke fill; text-shadow: 2px 2px 0 var(--ink); }
+    .pill { position: absolute; right: calc(var(--u) * 1.9); top: calc(var(--u) * .7); height: calc(var(--u) * 3.1); display: flex; align-items: center; gap: calc(var(--u) * 1.4); padding: 0 calc(var(--u) * 2);
+      font: 700 calc(var(--u) * 1.25)/1 var(--font-ui); letter-spacing: .08em; text-transform: uppercase; color: var(--cyan);
+      background: var(--navy); border: 3px solid var(--bright); border-radius: 7px; box-shadow: inset 0 0 0 2px var(--navy2); }
+    .pill i { width: calc(var(--u) * .5); height: calc(var(--u) * .5); border-radius: 50%; background: var(--cyan); }
+
+    /* ---------- headline ---------- */
+    .banner { left: calc(var(--u) * 4.4); width: calc(var(--u) * 91.2); top: calc(var(--u) * 5.5); height: calc(var(--u) * 7.2); display: flex; align-items: center; justify-content: center; gap: calc(var(--u) * 4);
+      background: radial-gradient(ellipse at 50% 120%, #1b6a94 0, transparent 70%), linear-gradient(90deg, #0a2a45, #14507a 50%, #0a2a45);
+      border: 3px solid var(--bright); border-radius: 8px; box-shadow: inset 0 0 0 2px var(--navy2), 0 calc(var(--u) * .3) 0 rgba(10, 42, 69, .45); overflow: hidden; }
+    .banner h1 { font: 400 calc(var(--u) * 4.1)/1 var(--font-pix); letter-spacing: .02em; color: var(--lime); padding-top: calc(var(--u) * .3);
+      text-shadow: 0 calc(var(--u) * .3) 0 #3d8a2a, 0 0 calc(var(--u) * 1.4) rgba(184, 245, 107, .45); white-space: nowrap; }
+    .spark { width: calc(var(--u) * 3.1); height: calc(var(--u) * 3.1); flex: none; color: #e9fbff; filter: drop-shadow(0 0 calc(var(--u) * .5) #7ad8ff); animation: twinkle 2.2s ease-in-out infinite; }
+    .spark.b { animation-delay: 1.1s; }
+    .dots { position: absolute; inset: 0; pointer-events: none; }
+    .sub { left: 0; right: 0; top: calc(var(--u) * 13); text-align: center; font: italic 600 calc(var(--u) * 1.75)/1.2 var(--font-ui); color: var(--ink); letter-spacing: .01em; }
+    @keyframes twinkle { 0%, 100% { transform: scale(1) rotate(0); opacity: 1; } 50% { transform: scale(.7) rotate(12deg); opacity: .65; } }
+
+    /* ---------- panels ---------- */
+    .panel { background: var(--navy); border: 3px solid var(--bright); border-radius: 8px; box-shadow: inset 0 0 0 2px var(--navy2), 0 calc(var(--u) * .3) 0 rgba(10, 42, 69, .45); overflow: hidden; z-index: 1; }
+    .dhead { display: flex; align-items: center; justify-content: space-between; height: calc(var(--u) * 3.2); padding: 0 calc(var(--u) * 1.3); flex: none;
+      font: 700 calc(var(--u) * 1.6)/1 var(--font-ui); text-transform: uppercase; letter-spacing: .05em; background: var(--navy2); border-bottom: 2px solid var(--bright); }
+    .dhead .cnt { display: grid; place-items: center; min-width: calc(var(--u) * 2.4); height: calc(var(--u) * 1.9); padding: 0 calc(var(--u) * .5); font: 700 calc(var(--u) * 1.05)/1 var(--font-ui);
+      color: var(--ink); background: #8dd3d2; border: 2px solid var(--white); border-radius: 4px; letter-spacing: 0; }
+
+    /* left: the spacecraft */
+    .craft { left: calc(var(--u) * 1.9); width: calc(var(--u) * 26.6); top: calc(var(--u) * 15.8); height: calc(var(--u) * 31.2); display: flex; flex-direction: column; }
+    .sky { position: relative; flex: 1; min-height: 0; display: grid; place-items: center; overflow: hidden;
+      background: radial-gradient(ellipse at 50% 108%, #2a8fb4 0, rgba(42, 143, 180, 0) 52%), linear-gradient(#06182c, #0b3152 70%, #0f4468); }
+    .stars { position: absolute; left: 0; top: 0; width: 1px; height: 1px; background: transparent; }
+    .orbit { position: absolute; width: calc(var(--u) * 22.6); height: calc(var(--u) * 22.6); border-radius: 50%; border: 2px solid rgba(90, 196, 232, .28); }
+    .ring { position: relative; width: calc(var(--u) * 20.2); height: calc(var(--u) * 20.2); border-radius: 50%; overflow: hidden; background: #08223a;
+      border: 3px solid #5ac4e8; box-shadow: 0 0 0 calc(var(--u) * .35) rgba(90, 196, 232, .22), 0 0 calc(var(--u) * 2.4) rgba(90, 196, 232, .4); }
+    .ring img { width: 100%; height: 100%; display: block; object-fit: cover; transform-origin: 50% 50%; animation: bob 5s ease-in-out infinite; }
+    @keyframes bob { 0%, 100% { transform: scale(1.04) translateY(calc(var(--u) * .25)); } 50% { transform: scale(1.04) translateY(calc(var(--u) * -.25)); } }
+    .cap { flex: none; margin: calc(var(--u) * .5) calc(var(--u) * .6) calc(var(--u) * .6); min-height: calc(var(--u) * 5.2); display: grid; place-items: center; padding: calc(var(--u) * .5) calc(var(--u) * 1.2); text-align: center;
+      font: 500 calc(var(--u) * 1.3)/1.25 var(--font-body); background: var(--navy2); border: 2px solid #2d79a0; border-radius: 6px; }
+
+    /* middle: engineering score */
+    .score { left: calc(var(--u) * 30); width: calc(var(--u) * 38.1); top: calc(var(--u) * 15.8); height: calc(var(--u) * 31.2); display: flex; flex-direction: column; }
+    .hero { flex: none; display: flex; align-items: center; justify-content: center; gap: calc(var(--u) * 2.4); height: calc(var(--u) * 8.3); }
+    .gr { display: flex; align-items: center; gap: calc(var(--u) * .5); }
+    .gr svg { width: calc(var(--u) * 4.4); height: calc(var(--u) * 6.6); color: var(--green); }
+    .gr b { font: 400 calc(var(--u) * 5.4)/1 var(--font-pix); text-shadow: 0 calc(var(--u) * .3) 0 rgba(0, 0, 0, .35), 0 0 calc(var(--u) * 1.2) currentColor; }
+    .vr { width: 2px; align-self: stretch; margin: calc(var(--u) * 1.4) 0; background: #2d79a0; }
+    .big { display: flex; align-items: baseline; gap: calc(var(--u) * .7); font-family: var(--font-ui); font-weight: 700; color: #f2f7c8; white-space: nowrap; }
+    .big b { font: 700 calc(var(--u) * 4.6)/1 var(--font-ui); text-shadow: 0 calc(var(--u) * .25) 0 rgba(0, 0, 0, .3); }
+    .big span { font-size: calc(var(--u) * 2.9); color: #dfeef2; }
+    .gl { margin-top: calc(var(--u) * .5); text-align: center; font: 700 calc(var(--u) * 1.75)/1 var(--font-ui); letter-spacing: .06em; color: var(--lime); }
+    .g-A { color: var(--green); } .g-B { color: #9be15d; } .g-C { color: var(--gold); } .g-D { color: #ff9a2a; } .g-F { color: #ff6b5a; }
+
+    .bk { flex: 1; min-height: 0; display: flex; flex-direction: column; margin: 0 calc(var(--u) * .9) calc(var(--u) * .8); padding: calc(var(--u) * .6) calc(var(--u) * 1) calc(var(--u) * .5);
+      background: var(--navy2); border: 2px solid #2d79a0; border-radius: 6px; }
+    .bk h3 { display: flex; justify-content: space-between; align-items: center; flex: none; margin-bottom: calc(var(--u) * .3); font: 700 calc(var(--u) * 1.3)/1 var(--font-ui); letter-spacing: .05em; text-transform: uppercase; color: var(--bar); }
+    .bk h3 em { font-style: normal; font-size: calc(var(--u) * 1); color: var(--gold); letter-spacing: .06em; }
+    #rows { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: space-between; }
+    #rows li { display: grid; grid-template-columns: calc(var(--u) * 2) calc(var(--u) * 12.8) 1fr calc(var(--u) * 5.4); align-items: center; gap: calc(var(--u) * .8); font: 600 calc(var(--u) * 1.18)/1 var(--font-body); }
+    #rows li svg { width: calc(var(--u) * 1.8); height: calc(var(--u) * 1.8); color: #8fe3f2; justify-self: center; }
+    #rows .nm { white-space: nowrap; }
+    #rows .bar { position: relative; height: calc(var(--u) * 1.15); background: #12476a; border: 2px solid #2d79a0; border-radius: 99px; overflow: hidden; }
+    #rows .bar i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: linear-gradient(#7aeaff, #2fc0e0); border-radius: 99px; transition: width 1s cubic-bezier(.2, .8, .2, 1); }
+    #rows .v { text-align: right; font: 700 calc(var(--u) * 1.15)/1 var(--font-ui); color: var(--bar); white-space: nowrap; }
+
+    /* right: components + status */
+    .comps { left: calc(var(--u) * 69.6); width: calc(var(--u) * 28.5); top: calc(var(--u) * 15.8); height: calc(var(--u) * 21.9); display: flex; flex-direction: column; }
+    #comps { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--bright) transparent; }
+    #comps li { display: flex; align-items: center; gap: calc(var(--u) * 1.2); min-height: calc(var(--u) * 2.9); padding: calc(var(--u) * .3) calc(var(--u) * 1.1); border-bottom: 2px solid #174a6e; font: 500 calc(var(--u) * 1.2)/1.15 var(--font-body); }
+    #comps li:last-child { border-bottom: 0; }
+    #comps li svg { flex: none; width: calc(var(--u) * 2.1); height: calc(var(--u) * 2.1); shape-rendering: crispEdges; }
+    .stat { left: calc(var(--u) * 69.6); width: calc(var(--u) * 28.5); top: calc(var(--u) * 38.3); height: calc(var(--u) * 8.7); display: flex; flex-direction: column; }
+    .stat .dhead { height: calc(var(--u) * 2.8); font-size: calc(var(--u) * 1.4); }
+    .okrow { flex: 1; display: flex; align-items: center; justify-content: center; gap: calc(var(--u) * 1.6); color: var(--green); }
+    .okrow svg { width: calc(var(--u) * 3.4); height: calc(var(--u) * 3.4); }
+    .okrow b { font: 700 calc(var(--u) * 3)/1 var(--font-ui); letter-spacing: .05em; text-shadow: 0 calc(var(--u) * .2) 0 rgba(0, 0, 0, .3); }
+
+    /* bottom: congratulations + continue */
+    .msg { left: calc(var(--u) * 3.4); width: calc(var(--u) * 66); top: calc(var(--u) * 48.5); height: calc(var(--u) * 6.4); display: grid; place-items: center; padding: 0 calc(var(--u) * 2.4); text-align: center;
+      font: 500 calc(var(--u) * 1.65)/1.3 var(--font-body); }
+    .nav { display: flex; align-items: center; justify-content: center; gap: calc(var(--u) * 1); right: calc(var(--u) * 1.9); width: calc(var(--u) * 22.6); top: calc(var(--u) * 49.3); height: calc(var(--u) * 4.6); padding: 0 calc(var(--u) * 1.6);
+      text-decoration: none; z-index: 3; font: 700 calc(var(--u) * 2.1)/1 var(--font-ui); text-transform: uppercase; letter-spacing: .06em; white-space: nowrap; color: #0e3a55; background: #6fdbea;
+      border: 3px solid var(--panel-deep); border-radius: 7px; box-shadow: inset 0 0 0 2px #b6f1f8, 0 4px 0 var(--panel-deep); transition: transform .08s, box-shadow .08s, filter .12s; }
+    .nav svg { width: calc(var(--u) * 2.4); height: calc(var(--u) * 2.4); }
+    .nav:hover { filter: brightness(1.08); }
+    .nav:active { transform: translateY(3px); box-shadow: inset 0 0 0 2px #b6f1f8, 0 1px 0 var(--panel-deep); }
+    .nav:focus-visible { outline: 3px solid var(--white); outline-offset: 3px; }
+
+    /* shown only when no validated spacecraft is found (e.g. the page was opened directly) */
+    .nodata-msg { left: calc(var(--u) * 20); width: calc(var(--u) * 60); top: calc(var(--u) * 20); height: calc(var(--u) * 20); display: none; place-items: center; text-align: center; padding: calc(var(--u) * 2); }
+    .nodata-msg h2 { font: 700 calc(var(--u) * 2.6)/1.1 var(--font-ui); text-transform: uppercase; color: var(--gold); margin-bottom: calc(var(--u) * 1.2); }
+    .nodata-msg p { font: 500 calc(var(--u) * 1.7)/1.35 var(--font-body); }
+    .nodata .banner, .nodata .sub, .nodata .craft, .nodata .score, .nodata .comps, .nodata .stat, .nodata .msg { display: none; }
+    .nodata .nodata-msg { display: grid; }
+
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+  </style>
+</head>
+<body>
+<div class="frame" id="frame">
+  <header class="top">
+    <img class="logo" src="assets/planet-icon.png" alt="">
+    <span class="brand">Orbital Engineer</span>
+    <div class="pill"><span id="pillName">Mission</span><i></i><span id="pillStage">Stage 01</span></div>
+  </header>
+
+  <section class="banner" aria-live="polite">
+    <div class="dots" id="dots"></div>
+    <svg class="spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z"/></svg>
+    <h1>MISSION SUCCESS!</h1>
+    <svg class="spark b" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z"/></svg>
+  </section>
+  <p class="sub">Your spacecraft is ready for launch!</p>
+
+  <!-- left: the spacecraft -->
+  <section class="panel craft" aria-label="Your spacecraft">
+    <div class="sky">
+      <div class="stars" id="stars"></div>
+      <div class="orbit"></div>
+      <div class="ring"><img id="craftImg" alt="Your spacecraft"></div>
+    </div>
+    <div class="cap" id="craftCap"></div>
+  </section>
+
+  <!-- middle: engineering score -->
+  <section class="panel score" aria-label="Engineering score">
+    <div class="dhead">Engineering Score</div>
+    <div class="hero">
+      <div class="gr"><svg id="laurelL" viewBox="0 0 40 60" aria-hidden="true"></svg><b id="gradeLetter" class="g-A">A</b><svg id="laurelR" viewBox="0 0 40 60" aria-hidden="true"></svg></div>
+      <div class="vr"></div>
+      <div>
+        <div class="big"><b id="scoreNum">0</b><span>/ 100</span></div>
+        <div class="gl">GRADE: <span id="gradeTxt">A</span></div>
+      </div>
+    </div>
+    <div class="bk">
+      <h3>Score Breakdown<em id="capNote" hidden></em></h3>
+      <ul id="rows"></ul>
+    </div>
+  </section>
+
+  <!-- right: components + mission status -->
+  <section class="panel comps" aria-label="Components used">
+    <div class="dhead">Components Used<span class="cnt" id="compCnt">0</span></div>
+    <ul id="comps"></ul>
+  </section>
+  <section class="panel stat" aria-label="Mission status">
+    <div class="dhead">Mission Status</div>
+    <div class="okrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 1a11 11 0 1 0 0 22 11 11 0 0 0 0-22zm0 2.2a8.8 8.8 0 1 1 0 17.6 8.8 8.8 0 0 1 0-17.6zm4.6 4.9l1.6 1.5-7.4 8-4.4-4.2 1.5-1.6 2.8 2.6z"/></svg><b>SUCCESS</b></div>
+  </section>
+
+  <!-- bottom: congratulations + continue -->
+  <section class="panel msg" id="congrats"></section>
+  <a class="nav" id="continueBtn" href="index.html"><span id="continueTxt">Continue</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.2l-5.6-5.6L12 4l8 8-8 8-1.4-1.4 5.6-5.6H4z"/></svg></a>
+
+  <section class="panel nodata-msg">
+    <div><h2>No launch-ready spacecraft yet</h2><p>Pick a mission, build your spacecraft and press <b>Validate Spacecraft</b> first. Your results will appear here after the launch.</p></div>
+  </section>
+</div>
+
+<!-- Hidden stand-ins for the construction page, so the game's own scoring code (js/game.js) can run here unchanged
+     and this page always shows exactly the same score as the validation screen. -->
+<div id="gameStub" hidden aria-hidden="true">
+  <nav id="cats"></nav><div id="modes"></div><div id="stencil"></div><div id="hint"></div><div id="inv"></div>
+  <div id="status"></div><div id="sel"></div><button id="validateBtn" type="button"></button>
+  <div id="modal" hidden><div id="results"></div><button id="closeBtn" type="button"></button><a id="proceed" href="index.html" hidden></a></div>
+</div>
+
+<script>
+// Which mission was just flown? 1) ?stage=  2) the construction page we came from  3) the stage chosen on the mission screen.
+(function () {
+  var ORDER = ['mro', 'cassini', 'msl', 'juno', 'dawn'];
+  var PAGE = { 'game.html': 'mro', 'game-cassini.html': 'cassini', 'game-msl.html': 'msl', 'game-juno.html': 'juno', 'game-dawn.html': 'dawn' };
+  var st = null, q = null;
+  try { q = new URLSearchParams(location.search).get('stage'); } catch (e) {}
+  if (ORDER.indexOf(q) >= 0) st = q;
+  if (!st && document.referrer) { try { var f = new URL(document.referrer).pathname.split('/').pop(); if (PAGE[f]) st = PAGE[f]; } catch (e) {} }
+  if (!st) { try { var s = localStorage.getItem('oe_stage'); if (ORDER.indexOf(s) >= 0) st = s; } catch (e) {} }
+  window.STAGE_ID = st || 'mro';
+  window.OrbitalLaunch = window.OrbitalLaunch || {};   // the launch cinematic is not needed here; stops game.js from preloading it
+})();
+</script>
+<script src="js/game.js"></script>
+<script>
+(function () {
+  'use strict';
+  var q = function (s) { return document.querySelector(s); };
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---------- per-mission details ----------
+  var INFO = {
+    mro:     { name: 'Mars Reconnaissance Orbiter', n: 1, img: 'assets/mro-banner.png',     pos: '50% 50%', cap: 'Mars Reconnaissance Orbiter is ready to study Mars from orbit!' },
+    cassini: { name: 'Cassini\u2013Huygens',        n: 2, img: 'assets/cassini-banner.png', pos: '34% 50%', cap: 'Cassini\u2013Huygens is ready to explore Saturn and its moons!' },
+    msl:     { name: 'Mars Science Laboratory',     n: 3, img: 'assets/msl-banner.png',     pos: '64% 50%', cap: 'Curiosity is ready to roll across the surface of Mars!' },
+    juno:    { name: 'Juno',                        n: 4, img: 'assets/juno-banner.png',    pos: '30% 50%', cap: 'Juno is ready to unveil the secrets of Jupiter!' },
+    dawn:    { name: 'Dawn',                        n: 5, img: 'assets/dawn-banner.png',    pos: '36% 50%', cap: 'Dawn is ready to explore Vesta and Ceres!' }
+  };
+  var info = INFO[STAGE] || INFO.mro;            // STAGE, calc, computeScore, PARTS, placed, P ... come from js/game.js
+  var CONGRATS = {
+    A: 'A remarkable achievement! Your engineering excellence has paved the way for groundbreaking discoveries.',
+    B: 'Well done, engineer! Your spacecraft is strong and mission-ready, with only small refinements left to make.',
+    C: 'Mission accomplished! Your spacecraft will fly, and there is room to sharpen the design next time.',
+    D: 'Your spacecraft cleared validation, but the design has weak spots. Refine it to earn a higher grade.',
+    F: 'Your spacecraft cleared validation by a narrow margin. Rework the design to improve its chances next time.'
+  };
+
+  q('#pillName').textContent = info.name;
+  q('#pillStage').textContent = 'Stage 0' + info.n;
+  document.title = 'Orbital Engineer - Mission Success - ' + info.name;
+  var img = q('#craftImg'); img.src = info.img; img.style.objectPosition = info.pos; img.alt = info.name;
+  q('#craftCap').textContent = info.cap;
+
+  // ---------- is there a validated design to show? ----------
+  var validated = false; try { validated = localStorage.getItem('oe_' + STAGE + '_validated') === '1'; } catch (e) {}
+  if (!validated || !Object.keys(placed).length) {
+    q('#frame').classList.add('nodata');
+    q('#continueBtn').href = 'mission.html'; q('#continueTxt').textContent = 'Mission Select';
+    return;
+  }
+
+  // ---------- score (same function the validation screen uses) ----------
+  var sc = computeScore(calc());
+  var grade = sc.grade;
+  q('#gradeLetter').textContent = grade; q('#gradeLetter').className = 'g-' + grade;
+  q('#gradeTxt').textContent = grade; q('#gradeTxt').className = 'g-' + grade;
+  document.querySelectorAll('.gr svg').forEach(function (s) { s.style.color = getComputedStyle(q('#gradeLetter')).color; });
+  q('#congrats').textContent = CONGRATS[grade] || CONGRATS.C;
+  if (sc.cap) { var cn = q('#capNote'); cn.hidden = false; cn.textContent = 'Capped at ' + sc.cap[1]; cn.title = sc.cap[0]; }
+
+  // score count-up
+  var num = q('#scoreNum');
+  if (reduce) num.textContent = sc.score;
+  else { var t0 = performance.now(), D = 1100; (function tick(now) { var k = Math.min(1, (now - t0) / D); num.textContent = Math.round(sc.score * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(tick); })(t0); }
+
+  // ---------- breakdown rows: the game's real score categories (points add up to the score) ----------
+  var IC = {
+    gear: 'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm9 5v-2l-2.3-.6a7 7 0 0 0-.8-1.8l1.2-2-1.4-1.4-2 1.2a7 7 0 0 0-1.8-.8L13 3h-2l-.6 2.3a7 7 0 0 0-1.8.8l-2-1.2L5.2 6.3l1.2 2a7 7 0 0 0-.8 1.8L3.3 11v2l2.3.6c.2.6.5 1.2.8 1.8l-1.2 2 1.4 1.4 2-1.2c.6.3 1.2.6 1.8.8L11 21h2l.6-2.3c.6-.2 1.2-.5 1.8-.8l2 1.2 1.4-1.4-1.2-2c.3-.6.6-1.2.8-1.8z',
+    bolt: 'M13 2L4 14h6l-1 8 9-12h-6z',
+    wifi: 'M12 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM5.6 12.4l1.7 1.7a6.6 6.6 0 0 1 9.4 0l1.7-1.7a9 9 0 0 0-12.8 0zM2 8.8l1.7 1.7a11.600 11.600 0 0 1 16.600 0L22 8.800a14 14 0 0 0-20 0z',
+    rocket: 'M12 2c3 2 5 6 5 10l2 3v3l-3-1-2 1h-4l-2-1-3 1v-3l2-3c0-4 2-8 5-10zm0 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4z',
+    flask: 'M9 2h6v2h-1v5l5.500 9.500A2 2 0 0 1 17.800 21H6.200a2 2 0 0 1-1.700-2.500L10 9V4H9z',
+    scale: 'M12 3a3 3 0 0 0-2.800 4H6L3 21h18L18 7h-3.200A3 3 0 0 0 12 3zm0 2a1 1 0 1 1 0 2 1 1 0 0 1 0-2z',
+    flag: 'M5 2h2v20H5zM8 3h11l-2.500 4.500L19 12H8z'
+  };
+  var ico = function (k) { return '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="' + IC[k] + '"/></svg>'; };
+  var ROWS = [['struct', 'Structural Integrity', 'gear'], ['power', 'Power Management', 'bolt'], ['comms', 'Data Connectivity', 'wifi'], ['prop', 'Propulsion Readiness', 'rocket'],
+    ['sci', 'Science Payload', 'flask'], ['mass', 'Mass Efficiency', 'scale'], ['ready', 'Mission Readiness', 'flag']];
+  var byId = {}; sc.cats.forEach(function (c) { byId[c.id] = c; });
+  q('#rows').innerHTML = ROWS.map(function (r) {
+    var c = byId[r[0]]; return '<li>' + ico(r[2]) + '<span class="nm">' + r[1] + '</span><span class="bar"><i data-w="' + (c.max ? c.pts / c.max * 100 : 0) + '"></i></span><span class="v">' + c.pts + ' / ' + c.max + '</span></li>';
+  }).join('');
+  var fill = function () { document.querySelectorAll('#rows .bar i').forEach(function (b, i) { b.style.transitionDelay = (reduce ? 0 : 150 + i * 90) + 'ms'; b.style.width = b.dataset.w + '%'; }); };
+  if (reduce) fill(); else requestAnimationFrame(function () { requestAnimationFrame(fill); });
+
+  // ---------- laurel wreaths ----------
+  function laurel(svg, mirror) {
+    var out = '<g' + (mirror ? ' transform="translate(40 0) scale(-1 1)"' : '') + ' fill="currentColor"><path d="';
+    var pts = [], a0 = 105, a1 = 255, N = 7;
+    for (var i = 0; i <= N; i++) { var a = (a0 + (a1 - a0) * i / N) * Math.PI / 180; pts.push([38 + 25 * Math.cos(a), 30 + 27 * Math.sin(a), a]); }
+    out += 'M' + pts.map(function (p) { return p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join('L') + '" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>';
+    pts.forEach(function (p, i) {
+      var tan = p[2] * 180 / Math.PI + 90, s = 0.75 + 0.25 * Math.sin(Math.PI * i / N);
+      [[-1, -38], [1, 38]].forEach(function (d) {
+        var nx = Math.cos(p[2]) * d[0] * 3.4, ny = Math.sin(p[2]) * d[0] * 3.4;
+        out += '<ellipse cx="' + (p[0] + nx).toFixed(1) + '" cy="' + (p[1] + ny).toFixed(1) + '" rx="' + (2.3 * s).toFixed(2) + '" ry="' + (5.6 * s).toFixed(2) + '" transform="rotate(' + (tan + d[1]).toFixed(1) + ' ' + (p[0] + nx).toFixed(1) + ' ' + (p[1] + ny).toFixed(1) + ')"/>';
+      });
+    });
+    svg.innerHTML = out + '</g>';
+  }
+  laurel(q('#laurelL'), false); laurel(q('#laurelR'), true);
+
+  // ---------- components used (grouped, with counts) ----------
+  var PAL = { k: '#10263a', y: '#f7dc8c', g: '#e0b04a', G: '#a8741f', w: '#ffffff', s: '#d4dce8', S: '#8f9db3', d: '#4a566b', B: '#1e56c0', b: '#3a8ae6', c: '#8fdcff', r: '#e8481f', o: '#ff9a2a', n: '#5de08a' };
+  var SPR = {
+    bus: ['..kkkkkk..', '.kyyyyyyk.', 'kyyggggggk', 'kyggddddGk', 'kygdSSdGGk', 'kygdSSdGGk', 'kyggddddGk', 'kgggggGGGk', '.kGGGGGGk.', '..kkkkkk..'],
+    solar: ['..........', 'kkkkkkkkkk', 'kBbBkkBbBk', 'kbcbSSbcbk', 'kBbBkkBbBk', 'kbcbSSbcbk', 'kBbBkkBbBk', 'kbcbkkbcbk', 'kkkkkkkkkk', '..........'],
+    rtg: ['..kkkkkk..', '.kyyggggk.', '.kyggggGk.', 'kkSSSSSSkk', '.kyggggGk.', '.kyggggGk.', 'kkSSSSSSkk', '.kyggggGk.', '.kgGGGGGk.', '..kkkkkk..'],
+    battery: ['...kkkk...', '..kSSSSk..', '.kddddddk.', '.kdnnnndk.', '.kdnnnndk.', '.kdyyyydk.', '.kdyyyydk.', '.kddddddk.', '.kddddddk.', '..kkkkkk..'],
+    engine: ['...kkkk...', '..kSSSSk..', '..kSssSk..', '...kSSk...', '..kkSSkk..', '.kSSddSSk.', '.kSddddSk.', 'kSddddddSk', 'kkkkkkkkkk', '..roooor..'],
+    thruster: ['..........', '...kkkk...', '..kSSSSk..', '..kSddSk..', '...kSSk...', '..kkddkk..', '..roooor..', '...roor...', '....rr....', '..........'],
+    tank: ['..kkkkkk..', '.kwsssSSk.', 'kwssssSSSk', 'kwsssSSSSk', 'kssSSSSSdk', 'kssSSSSSdk', 'kSSSSSSddk', 'kSSSSSdddk', '.kSSdddddk', '..kkkkkk..'],
+    tracker: ['..........', '..kkkkkk..', '.kddddddk.', 'kdSSSSSSdk', 'kdSccccSdk', 'kdScwwcSdk', 'kdSccccSdk', 'kdSSSSSSdk', '.kddddddk.', '..kkkkkk..'],
+    sci: ['.kkkkkkkk.', 'kSSSSSSSSk', 'kSkkkkkkSk', 'kSkBccBkSk', 'kSkcwcBkSk', 'kSkBBBBkSk', 'kSkkkkkkSk', 'kSSSSSSSSk', '.kkkkkkkk.', '..........'],
+    hga: ['....kk....', '....kc....', '...kSk....', '.kkkkkkkk.', 'kwwsssssSk', 'kssssssSSk', '.kSSSSSSk.', '..kkkkkk..', '....kk....', '...kddk...'],
+    uhf: ['..c.kk.c..', '.c..kc..c.', 'c...kS...c', '.c..kS..c.', '..c.kS.c..', '....kS....', '....kS....', '..kkkkkk..', '.kddddddk.', '.kkkkkkkk.'],
+    store: ['.S.S.S.S..', 'kkkkkkkkkk', 'kddddddddk', 'kdnnddnndk', 'kddddddddk', 'kdnnddnndk', 'kddddddddk', 'kkkkkkkkkk', '.S.S.S.S..', '..........'],
+    thermal: ['....kk....', '...kwwk...', '...kwrk...', '...kwrk...', '...kwrk...', '...kwrk...', '..kwrrrk..', '..krrrrk..', '...kkkk...', '..........'],
+    mob: ['..........', '...kkkk...', '..kddddk..', '.kdSSSSdk.', '.kdSkkSdk.', '.kdSkkSdk.', '.kdSSSSdk.', '..kddddk..', '...kkkk...', '..........'],
+    skycrane: ['...kkkk...', '..kSSSSk..', '..kSssSk..', '..kSSSSk..', 'kkkSSSSkkk', 'kSkSddSkSk', 'kSkkkkkkSk', 'kdk.oo.kdk', '....oo....', '....rr....'],
+    probe: ['....kk....', '...kyyk...', '..kyyggk..', '.kyyggggk.', '.kyggggGk.', 'kyggGGGGGk', 'kkkkkkkkkk', '..kdSSdk..', '...kkkk...', '..........'],
+    frame: ['kkkkkkkkkk', 'kSSSSSSSSk', 'kSkSSSSkSk', 'kSSkSSkSSk', 'kSSSkkSSSk', 'kSSkSSkSSk', 'kSkSSSSkSk', 'kSSSSSSSSk', 'kkkkkkkkkk', '..........'],
+    bolt: ['....kkkk..', '...kyyyk..', '..kyyyk...', '.kyyyyyyk.', '.kkkkyyyk.', '....kyyk..', '...kyyk...', '..kyyk....', '..kyk.....', '..kk......'],
+    valve: ['..kkkkkk..', '.kSSSSSSk.', '..kkSSkk..', '...kSSk...', 'kkkkSSkkkk', 'kSSSSSSSSk', 'kSSSSSSSSk', 'kkkkSSkkkk', '...kSSk...', '...kkkk...'],
+    star: ['....cc....', '....cc....', '..cccccc..', 'ccccwwcccc', 'ccccwwcccc', '..cccccc..', '....cc....', '....cc....', '..........', '..........']
+  };
+  var svgOf = function (rows) {
+    var r = ''; rows.forEach(function (row, y) { var x = 0; while (x < row.length) { var ch = row[x]; if (ch === '.') { x++; continue; } var e = x; while (e < row.length && row[e] === ch) e++; r += '<rect x="' + x + '" y="' + y + '" width="' + (e - x) + '" height="1" fill="' + PAL[ch] + '"/>'; x = e; } });
+    return '<svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true">' + r + '</svg>';
+  };
+  var CAT_ICON = { structure: 'frame', power: 'bolt', propulsion: 'valve', navigation: 'star', science: 'sci', comms: 'uhf', data: 'store' };
+  var iconOf = function (pt) {
+    if (pt.id === 'c_huygens') return svgOf(SPR.probe);
+    if (pt.type === 'solar') return svgOf(['p_gp', 'p_mm'].indexOf(pt.id) >= 0 ? SPR.rtg : SPR.solar);
+    if (pt.type !== 'x' && SPR[pt.type]) return svgOf(SPR[pt.type]);
+    return svgOf(SPR[CAT_ICON[pt.cat]] || SPR.frame);
+  };
+  var count = {}; Object.keys(placed).forEach(function (sid) { count[placed[sid]] = (count[placed[sid]] || 0) + 1; });
+  var catRank = {}; CATS.forEach(function (c, i) { catRank[c[0]] = i; });
+  var used = Object.keys(count).map(function (id) { return P[id]; }).filter(Boolean)
+    .sort(function (a, b) { return (catRank[a.cat] - catRank[b.cat]) || a.name.localeCompare(b.name); });
+  q('#comps').innerHTML = used.map(function (pt) { return '<li>' + iconOf(pt) + '<span>' + pt.name + (count[pt.id] > 1 ? ' (' + count[pt.id] + ')' : '') + '</span></li>'; }).join('');
+  q('#compCnt').textContent = Object.keys(placed).length;
+  q('#compCnt').title = Object.keys(placed).length + ' components installed';
+
+  // ---------- decoration: sparkles in the banner, stars behind the spacecraft ----------
+  var seed = 11, rnd = function () { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+  var st = []; for (var i = 0; i < 46; i++) { var x = (rnd() * 26).toFixed(1), y = (rnd() * 26).toFixed(1), a = (0.35 + rnd() * 0.65).toFixed(2), big = rnd() > .86 ? 2 : 1; st.push('calc(var(--u) * ' + x + ') calc(var(--u) * ' + y + ') 0 ' + (big > 1 ? '1px ' : '0 ') + 'rgba(255,255,255,' + a + ')'); }
+  q('#stars').style.boxShadow = st.join(',');
+  var dt = []; for (var j = 0; j < 26; j++) dt.push('<i style="position:absolute;left:' + (rnd() * 100).toFixed(1) + '%;top:' + (rnd() * 100).toFixed(1) + '%;width:2px;height:2px;background:rgba(200,240,255,' + (0.25 + rnd() * 0.5).toFixed(2) + ')"></i>');
+  q('#dots').innerHTML = dt.join('');
+})();
+</script>
+</body>
+</html>

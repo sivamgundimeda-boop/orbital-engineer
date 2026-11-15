@@ -1,0 +1,12 @@
+{
+  "name": "orbital-engineer",
+  "version": "1.0.0",
+  "description": "Orbital Engineer - Satellite Mission Simulator",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "qrcode-terminal": "^0.12.0"
+  }
+}
